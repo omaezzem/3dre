@@ -1,0 +1,18 @@
+NO ./imgs/49_Italian-stone-wall_DISPL.xpm
+SO ./imgs/49_Italian-stone-wall_DIFF.xpm
+WE ./imgs/49_Italian-stone-wall_NORM.xpm
+EA ./imgs/49_Italian-stone-wall_SPEC.xpm
+
+C 225,30,0
+F 220,100,0
+
+ 111111111
+1000000001
+10000N0001
+1000010001
+1000110001
+1000000001
+1000000001
+1000000001
+1000000001
+1111111111
