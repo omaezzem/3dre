@@ -6,12 +6,16 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 10:17:27 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/12/01 11:45:00 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:21:52 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include <math.h>
+
+// Collision buffer - prevents player from getting too close to walls
+// Collision buffer - prevents player from getting too close to walls
+#define COLLISION_BUFFER 10.0
 
 static double normalize_angle(double angle)
 {
@@ -23,6 +27,23 @@ static double normalize_angle(double angle)
     return angle;
 }
 
+// Fast collision check - only checks 4 cardinal directions
+static int check_collision_fast(t_cub *cub, double x, double y)
+{
+    // Check center point
+    if (is_wall(cub, x, y))
+        return 1;
+    
+    // Check 4 directions only (much faster than 9 points)
+    if (is_wall(cub, x + COLLISION_BUFFER, y) ||
+        is_wall(cub, x - COLLISION_BUFFER, y) ||
+        is_wall(cub, x, y + COLLISION_BUFFER) ||
+        is_wall(cub, x, y - COLLISION_BUFFER))
+        return 1;
+    
+    return 0;
+}
+
 void move_forward(t_cub *cub)
 {
     double new_x;
@@ -31,8 +52,7 @@ void move_forward(t_cub *cub)
     new_x = cub->player.pos_x + cos(cub->player.angle) * MOVE_SPEED;
     new_y = cub->player.pos_y + sin(cub->player.angle) * MOVE_SPEED;
 
-    // Collision check in pixels, not map coordinates
-    if (!is_wall(cub, new_x, new_y))
+    if (!check_collision_fast(cub, new_x, new_y))
     {
         cub->player.pos_x = new_x;
         cub->player.pos_y = new_y;
@@ -47,7 +67,7 @@ void move_backward(t_cub *cub)
     new_x = cub->player.pos_x - cos(cub->player.angle) * MOVE_SPEED;
     new_y = cub->player.pos_y - sin(cub->player.angle) * MOVE_SPEED;
 
-    if (!is_wall(cub, new_x, new_y))
+    if (!check_collision_fast(cub, new_x, new_y))
     {
         cub->player.pos_x = new_x;
         cub->player.pos_y = new_y;
@@ -63,7 +83,7 @@ void move_left(t_cub *cub)
     new_x = cub->player.pos_x + cos(side_angle) * MOVE_SPEED;
     new_y = cub->player.pos_y + sin(side_angle) * MOVE_SPEED;
 
-    if (!is_wall(cub, new_x, new_y))
+    if (!check_collision_fast(cub, new_x, new_y))
     {
         cub->player.pos_x = new_x;
         cub->player.pos_y = new_y;
@@ -79,7 +99,7 @@ void move_right(t_cub *cub)
     new_x = cub->player.pos_x + cos(side_angle) * MOVE_SPEED;
     new_y = cub->player.pos_y + sin(side_angle) * MOVE_SPEED;
 
-    if (!is_wall(cub, new_x, new_y))
+    if (!check_collision_fast(cub, new_x, new_y))
     {
         cub->player.pos_x = new_x;
         cub->player.pos_y = new_y;
@@ -95,7 +115,6 @@ void rotate_right(t_cub *cub)
 {
     cub->player.angle = normalize_angle(cub->player.angle + ROT_SPEED);
 }
-
 int render_frame(t_cub *cub)
 {
     if (cub->keys.w)

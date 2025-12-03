@@ -6,30 +6,30 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:37:22 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/12/03 17:55:39 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:34:37 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "../cub.h"
 
-void	draw_ceiling_floor(t_cub *cub)
+void draw_ceiling_floor_column(t_cub *cub, int x, int wall_top, int wall_bottom)
 {
-	int x;
 	int y;
-
+	
+	// Draw ceiling above wall
 	y = 0;
+	while (y < wall_top && y < HEIGHT)
+	{
+		my_mlx_pixel_put(cub, x, y, cub->ceiling_color);
+		y++;
+	}
+	
+	// Draw floor below wall
+	y = wall_bottom;
 	while (y < HEIGHT)
 	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			if (y < HEIGHT / 2)
-				my_mlx_pixel_put(cub, x, y, cub->ceiling_color);
-			else
-				my_mlx_pixel_put(cub, x, y, cub->floor_color);
-			x++;
-		}
+		my_mlx_pixel_put(cub, x, y, cub->floor_color);
 		y++;
 	}
 }
@@ -337,6 +337,11 @@ void draw_vertical_wall_strip(t_cub *data, int x, int wall_top, int height_wall,
 	}
 	if (wall_bottom > HEIGHT)
 		wall_bottom = HEIGHT;
+	
+	// Safety check for extreme clipping
+	if (wall_top >= HEIGHT || wall_bottom <= 0)
+		return;
+	
 	for (y = wall_top; y < wall_bottom; y++)
 	{
 		if (texture && texture->img && texture->addr)
@@ -379,7 +384,6 @@ void draw_frame(t_cub *cub)
 		mlx_destroy_image(cub->mlx, cub->img);
 		exit(ft_error("mlx_get_data_addr failed"));
 	}
-	draw_ceiling_floor(cub);
 
 	r.projection_distance = (WIDTH / 2.0) / tan(FOV / 2.0);
 
@@ -396,8 +400,8 @@ void draw_frame(t_cub *cub)
 
 		r.distance = ft_casting(cub, r.ray_angle, &r.is_vertical);
 		r.corrected_distance = r.distance * cos(r.ray_angle - cub->player.angle);
-		if (r.corrected_distance < 0.1)
-			r.corrected_distance = 0.1;
+		if (r.corrected_distance < 1.0)
+			r.corrected_distance = 1.0;
 
 		r.wall_height = (T_SIZE / r.corrected_distance) * r.projection_distance;
 
@@ -408,6 +412,8 @@ void draw_frame(t_cub *cub)
 
 		draw_vertical_wall_strip(
 			cub, r.i, (int)r.wall_top, (int)r.wall_height, r.is_vertical, r.ray_angle);
+		draw_ceiling_floor_column(cub, r.i, (int)r.wall_top, 
+								  (int)r.wall_top + (int)r.wall_height);
 
 		r.i++;
 	}

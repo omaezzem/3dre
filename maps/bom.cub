@@ -1,18 +1,18 @@
-NO ./imgs/49_Italian-stone-wall_DISPL.xpm
-SO ./imgs/49_Italian-stone-wall_DIFF.xpm
-WE ./imgs/49_Italian-stone-wall_NORM.xpm
-EA ./imgs/49_Italian-stone-wall_SPEC.xpm
+NO ./imgs/3_dirty-bricks-texture-seamless.xpm
+SO ./imgs/42_old-damaged-bricks-texture-seamless.xpm
+WE ./imgs/49_Italian-stone-wall_DIFF.xpm
+EA ./imgs/80_old-bricks-texture-seamless-2.xpm
 
 C 225,30,0
 F 220,100,0
 
  111111111
 1000000001
-10000N0001
+1000000001
 1000010001
 1000110001
 1000000001
 1000000001
-1000000001
+100000001
 1000000001
 1111111111

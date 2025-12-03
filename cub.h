@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:47:27 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/01 10:50:44 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:11:48 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define WIDTH 1580
 # define FOV (M_PI / 3.0)   /* 60 degrees */
 # define T_SIZE 50
-# define MOVE_SPEED 5
+# define MOVE_SPEED 10
 # define ROT_SPEED 0.05
 
 #define KEY_W        13   // 'w'
