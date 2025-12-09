@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:47:10 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/03 10:28:25 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/09 13:01:39 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,46 +19,40 @@ int main(int ac, char **av)
 	init_cub(&cub);
 	if (!pars_av(ac, av))
 	{
-		fprintf(stderr, "Error: Invalid arguments\n");
+		fprintf(stderr, "Error\n Invalid arguments\n");
 		return (EXIT_FAILURE);
 	}
 	if (!read_map(av[1], &cub))
 	{
-		fprintf(stderr, "Error: Failed to read map\n");
+		fprintf(stderr, "Error\n Failed to read map\n");
 		return (EXIT_FAILURE);
 	}
-	if (!handle_colors_F(&cub))
-	{
-		fprintf(stderr, "Error: Invalid colors\n");
-		return (EXIT_FAILURE);
-	}
-	if (!handle_colors_C(&cub))
-	{
-		fprintf(stderr, "Error: Invalid colors\n");
-		return (EXIT_FAILURE);
-	}
+	// if (!handle_colors_F(&cub))
+	// {
+	// 	fprintf(stderr, "Error\n Invalid colors\n");
+	// 	return (EXIT_FAILURE);
+	// }
+	// if (!handle_colors_C(&cub))
+	// {
+	// 	fprintf(stderr, "Error\n Invalid colors\n");
+	// 	return (EXIT_FAILURE);
+	// }
 	if (!pars_map(&cub))
 	{
-		fprintf(stderr, "Error: Invalid map\n");
+		fprintf(stderr, "Error\n Invalid map\n");
 		return (EXIT_FAILURE);
 	}
 	change_space(&cub);
 	cub.map_lines = ft_split(cub.map, '\n');
 	if (!cub.map_lines)
 	{
-		fprintf(stderr, "Error: Failed to split map\n");
+		fprintf(stderr, "Error\n Failed to split map\n");
 		return (EXIT_FAILURE);
 	}
 	find_p(&cub);
-	
-	// raycast=====================
 	init_player_raycasting(&cub);
-	// cub.nopath = "./imgs/49_Italian-stone-wall_DIFF.xpm";
-    // cub.sopath = "./imgs/49_Italian-stone-wall_DISPL.xpm";
-    // cub.espath = "./imgs/49_Italian-stone-wall_NORM.xpm";
-    // cub.wepath = "./imgs/49_Italian-stone-wall_SPEC.xpm";
 	cub.floor_color = 0x573D32;
-	cub.ceiling_color = 0x87CEEB;
+	cub.ceiling_color = 0x000000;
 	mlx_initcub(&cub);
 
 	// free_all(&cub);

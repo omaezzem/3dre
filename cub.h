@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:47:27 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/03 18:11:48 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/09 14:08:08 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <math.h>
-# include <mlx.h>
+# include "minilibx-linux/mlx.h"
 # include <stdbool.h>
 # include "get_next_line/get_next_line.h"
 
@@ -29,16 +29,42 @@
 # define T_SIZE 50
 # define MOVE_SPEED 10
 # define ROT_SPEED 0.05
+#define COLLISION_BUFFER 10.0
 
-#define KEY_W        13   // 'w'
-#define KEY_A        0    // 'a'
-#define KEY_S        1    // 's'
-#define KEY_D        2    // 'd'
+#define KEY_W        119  // 'w'
+#define KEY_A        97   // 'a'
+#define KEY_S        115  // 's'
+#define KEY_D        100  // 'd'
 
-#define KEY_LEFT     123  // Left Arrow
-#define KEY_RIGHT    124  // Right Arrow
+#define KEY_LEFT     65361 // Left Arrow
+#define KEY_RIGHT    65363 // Right Arrow
 
-#define KEY_ESC      53   // Escape
+#define KEY_ESC      65307 // Escapewwww
+
+typedef struct s_texture
+{
+    void    *img;
+    char    *addr;
+    int     width;
+    int     height;
+    int     bpp;
+    int     line_len;
+    int     endian;
+}   t_texture;
+
+typedef struct s_wall_tex
+{
+    int y;
+	int color;
+	int wall_bottom;
+	t_texture *texture;
+	int tex_x;
+	int tex_y;
+	double wall_hit_x;
+	double step;
+	double tex_pos;
+	int original_wall_top;
+}       t_wall_tex;
 
 typedef struct s_render
 {
@@ -52,6 +78,29 @@ typedef struct s_render
     int     is_vertical;
 }   t_render;
 
+typedef struct s_hcheck
+{
+    double intersection_x;
+	double intersection_y;
+	double check_y;
+	double step_x;
+	double step_y;
+    int f_up;
+    int f_down;
+    int iterations;
+}   t_hcheck;
+
+typedef struct s_vcheck
+{
+    double intersection_x;
+	double intersection_y;
+	double check_x;
+	double step_x;
+	double step_y;
+    int f_left;
+    int f_right;
+    int iterations;
+}   t_vcheck;
 
 typedef struct s_keys
 {
@@ -117,16 +166,6 @@ typedef struct s_ray
     t_player player;
 }   t_ray;
 
-typedef struct s_texture
-{
-    void    *img;
-    char    *addr;
-    int     width;
-    int     height;
-    int     bpp;
-    int     line_len;
-    int     endian;
-}   t_texture;
 
 typedef struct s_cub
 {
@@ -204,7 +243,7 @@ char    *ft_strdup(char *s1);
 char    *ft_strjoin(char *s1, char *s2);
 size_t  ft_strlen(char *s);
 char    **ft_split(char *s, char c);
-
+int     is_empty_line(char *line);
 /* Parsing functions */
 void    init_cub(t_cub *cub);
 int     pars_av(int ac, char **av);
@@ -220,7 +259,10 @@ int     pars_map(t_cub *cub);
 void    change_space(t_cub *cub);
 int     handle_map(t_cub *cub);
 void    find_p(t_cub *game);
-
+int	ft_strcmp(char *s1, char *s2);
+void	ft_free_split(char **split);
+int	ft_atoi(const char *str);
+int	ft_split_len(char **split);
 /* MLX functions */
 int     len_h(char **line);
 void    mlx_initcub(t_cub *cub);
@@ -251,6 +293,8 @@ void    move_player(t_cub *cub, double dir); /* dir = +1 forward, -1 backward */
 void    strafe_player(t_cub *cub, double dir); /* dir = +1 right, -1 left */
 void    rotate_player(t_cub *cub, double dir); /* dir = +1 right, -1 left */
 int is_wall(t_cub *cub, double x, double y);
+double h_check(t_cub *cub, double *hit_x, double *hit_y, double angle);
+double v_check(t_cub *cub, double *hit_x, double *hit_y, double angle);
 /* Utility */
 // static double normalize_angle(double angle);
 #endif /* CUB_H */

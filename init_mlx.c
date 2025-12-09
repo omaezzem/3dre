@@ -6,16 +6,12 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 10:17:27 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/12/03 18:21:52 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/07 10:41:45 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include <math.h>
-
-// Collision buffer - prevents player from getting too close to walls
-// Collision buffer - prevents player from getting too close to walls
-#define COLLISION_BUFFER 10.0
 
 static double normalize_angle(double angle)
 {
@@ -27,14 +23,11 @@ static double normalize_angle(double angle)
     return angle;
 }
 
-// Fast collision check - only checks 4 cardinal directions
 static int check_collision_fast(t_cub *cub, double x, double y)
 {
-    // Check center point
     if (is_wall(cub, x, y))
         return 1;
     
-    // Check 4 directions only (much faster than 9 points)
     if (is_wall(cub, x + COLLISION_BUFFER, y) ||
         is_wall(cub, x - COLLISION_BUFFER, y) ||
         is_wall(cub, x, y + COLLISION_BUFFER) ||
@@ -224,24 +217,20 @@ void mlx_initcub(t_cub *cub)
     cub->mlx = mlx_init();
     if (!cub->mlx)
         failed_mlx();
-
     cub->window = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "CUB3D");
     if (!cub->window)
         failed_w();
-
     cub->keys.w = 0;
     cub->keys.s = 0;
     cub->keys.a = 0;
     cub->keys.d = 0;
     cub->keys.left = 0;
     cub->keys.right = 0;
-
 	load_textures(cub);
     mlx_hook(cub->window, 2, 1L<<0, handling_keys, cub);
     mlx_hook(cub->window, 3, 1L<<1, key_release, cub);
     mlx_hook(cub->window, 17, 0, close_window, cub);
-    mlx_hook(cub->window, 6, 1L<<6, mouse_move, cub);
-
+    // mlx_hook(cub->window, 6, 1L<<6, mouse_move, cub);
     mlx_loop_hook(cub->mlx, render_frame, cub);
     mlx_loop(cub->mlx);
 }
