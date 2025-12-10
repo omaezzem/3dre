@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:47:10 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/09 13:01:39 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/10 13:57:06 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ int main(int ac, char **av)
 		fprintf(stderr, "Error\n Failed to read map\n");
 		return (EXIT_FAILURE);
 	}
-	// if (!handle_colors_F(&cub))
-	// {
-	// 	fprintf(stderr, "Error\n Invalid colors\n");
-	// 	return (EXIT_FAILURE);
-	// }
-	// if (!handle_colors_C(&cub))
-	// {
-	// 	fprintf(stderr, "Error\n Invalid colors\n");
-	// 	return (EXIT_FAILURE);
-	// }
 	if (!pars_map(&cub))
 	{
 		fprintf(stderr, "Error\n Invalid map\n");
@@ -54,7 +44,5 @@ int main(int ac, char **av)
 	cub.floor_color = 0x573D32;
 	cub.ceiling_color = 0x000000;
 	mlx_initcub(&cub);
-
-	// free_all(&cub);
 	return (0);
 }

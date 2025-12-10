@@ -1,7 +1,7 @@
-NO ./imgs/3_dirty-bricks-texture-seamless.xpm
-SO ./imgs/42_old-damaged-bricks-texture-seamless.xpm
-WE ./imgs/49_Italian-stone-wall_DIFF.xpm
-EA ./imgs/80_old-bricks-texture-seamless-2.xpm
+NO ./imgs/Lava_04_emissive-1K.xpm
+SO ./imgs/Lava_05_emissive-1K.xpm
+WE ./imgs/lava_10_emissive-1K.xpm
+EA ./imgs/lava_11_emissive-1K.xpm
 
 C 225,30,0
 F 220,100,0

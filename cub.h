@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:47:27 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/09 14:08:08 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:25:28 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,21 @@ typedef struct s_texture
 
 typedef struct s_wall_tex
 {
-    int y;
-	int color;
-	int wall_bottom;
-	t_texture *texture;
-	int tex_x;
-	int tex_y;
-	double wall_hit_x;
-	double step;
-	double tex_pos;
-	int original_wall_top;
-}       t_wall_tex;
+	int				original_wall_top;
+	int				wall_top;
+	int				wall_bottom;
+	int				height_wall;
+	int				is_vertical;
+	double			ray_angle;
+	t_texture		*texture;
+	double			wall_hit_x;
+	int				tex_x;
+	int				tex_y;
+	double			step;
+	double			tex_pos;
+	int				y;
+	int				color;
+}	t_wall_tex;
 
 typedef struct s_render
 {
@@ -231,20 +235,17 @@ typedef struct s_cub
     t_casting cast;
 }   t_cub;
 
-/* Get next line functions */
 char    *creat_text(int fd, char *str);
 char    *get_current_line(char *line);
 char    *next_list(char *text);
 char    *get_next_line(int fd);
 size_t	ft_strlen(char *s);
-/* String utilities */
 char    *ft_substr(char *s, unsigned int start, size_t len);
 char    *ft_strdup(char *s1);
 char    *ft_strjoin(char *s1, char *s2);
 size_t  ft_strlen(char *s);
 char    **ft_split(char *s, char c);
 int     is_empty_line(char *line);
-/* Parsing functions */
 void    init_cub(t_cub *cub);
 int     pars_av(int ac, char **av);
 void    init_texture(char *path, t_cub *cub);
@@ -263,14 +264,11 @@ int	ft_strcmp(char *s1, char *s2);
 void	ft_free_split(char **split);
 int	ft_atoi(const char *str);
 int	ft_split_len(char **split);
-/* MLX functions */
 int     len_h(char **line);
 void    mlx_initcub(t_cub *cub);
 void    failed_w(void);
 void    ft_putstr_fd(char *s, int fd);
 void    ft_putchar_fd(char c, int fd);
-
-/* Raycasting functions (angle-based) */
 void    init_player_raycasting(t_cub *cub);
 void    load_textures(t_cub *cub);
 void    load_texture(t_cub *cub, t_texture *tex, char *path);
@@ -283,18 +281,25 @@ int get_texture_color(t_texture *tex, int tex_x, int tex_y);
 void    my_mlx_pixel_put(t_cub *cub, int x, int y, int color);
 void    draw_ceiling(t_cub *cub);
 void    draw_floor(t_cub *cub);
-
-/* Input & movement helpers */
 int     key_press(int keycode, t_cub *cub);
 int     key_release(int keycode, t_cub *cub);
-void    handle_keys(t_cub *cub);            /* called every frame to apply movement */
-void    update_player(t_cub *cub);           /* update player position/angle from keys */
-void    move_player(t_cub *cub, double dir); /* dir = +1 forward, -1 backward */
-void    strafe_player(t_cub *cub, double dir); /* dir = +1 right, -1 left */
-void    rotate_player(t_cub *cub, double dir); /* dir = +1 right, -1 left */
+void    handle_keys(t_cub *cub);
+void    update_player(t_cub *cub);
+void    move_player(t_cub *cub, double dir);
+void    strafe_player(t_cub *cub, double dir);
+void    rotate_player(t_cub *cub, double dir);
 int is_wall(t_cub *cub, double x, double y);
 double h_check(t_cub *cub, double *hit_x, double *hit_y, double angle);
 double v_check(t_cub *cub, double *hit_x, double *hit_y, double angle);
-/* Utility */
-// static double normalize_angle(double angle);
-#endif /* CUB_H */
+void my_mlx_pixel_put(t_cub *data, int x, int y, int color);
+int is_wall(t_cub *cub, double x, double y);
+void	checker_ray_angle(t_render *r);
+int ft_error(char *str);
+void draw_ceiling_floor_column(t_cub *cub, int x, int wall_top, int wall_bottom);
+void	load_textures(t_cub *cub);
+void	load_texture(t_cub *cub, t_texture *tex, char *path);
+t_texture *get_wall_texture(t_cub *cub, double ray_angle, int is_vertical);
+int get_texture_color(t_texture *tex, int tex_x, int tex_y);
+void	ft_loop_tex(t_wall_tex *wt, t_render *r, t_cub *cub);
+
+#endif
