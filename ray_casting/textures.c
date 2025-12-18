@@ -12,6 +12,63 @@
 
 #include "../cub.h"
 
+void	update_weapon(t_cub *cub)
+{
+	static int delay = 0;
+
+	delay++;
+	if (delay < 1)
+		return;
+
+	delay = 0;
+	cub->weapon.current++;
+	if (cub->weapon.current >= cub->weapon.frame_count)
+		cub->weapon.current = 0;
+}
+
+void	draw_weapon(t_cub *cub)
+{
+	t_texture	*tex;
+	int			x;
+	int			y;
+	int			start_x;
+	int			start_y;
+	int			color;
+
+	tex = &cub->weapon.frames[cub->weapon.current];
+	start_x = (WIDTH / 2) - (tex->width / 2);
+	start_y = HEIGHT - tex->height;
+	y = 0;
+	while (y < tex->height)
+	{
+		x = 0;
+		while (x < tex->width)
+		{
+			color = get_texture_color(tex, x, y);
+			if ((color & 0x00FFFFFF) != 0)
+				my_mlx_pixel_put(cub, start_x + x, start_y + y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	load_weapon(t_cub *cub)
+{
+	int		i;
+	char	path[64];
+
+	cub->weapon.frame_count = 18;
+	cub->weapon.current = 0;
+	cub->weapon.animating = 0;
+	i = 0;
+	while (++i < cub->weapon.frame_count)
+	{
+		sprintf(path, "imgs/%d.xpm", i);
+		load_texture(cub, &cub->weapon.frames[i], path);
+	}
+}
+
 void	load_textures(t_cub *cub)
 {	
 	if (!cub->north_texture || !cub->south_texture
@@ -20,6 +77,10 @@ void	load_textures(t_cub *cub)
 		ft_putstr_fd("Error\nMissing texture paths\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	if (cub->floor_texture)
+		load_texture(cub, &cub->tex_floor, cub->floor_texture);
+	if (cub->ceil_texture)
+		load_texture(cub, &cub->tex_ceil, cub->ceil_texture);
 	if (cub->north_texture)
 		load_texture(cub, &cub->tex_north, cub->north_texture);
 	if (cub->south_texture)
@@ -28,6 +89,7 @@ void	load_textures(t_cub *cub)
 		load_texture(cub, &cub->tex_east, cub->east_texture);
 	if (cub->west_texture)
 		load_texture(cub, &cub->tex_west, cub->west_texture);
+	load_weapon(cub);
 }
 
 void	load_texture(t_cub *cub, t_texture *tex, char *path)

@@ -89,6 +89,7 @@ void	ft_loop_ray(t_render *r, t_cub *cub)
 {
 	while (r->i < WIDTH)
 	{
+
 		r->ray_angle = cub->player.angle - (FOV / 2.0)
 			+ ((double)r->i * FOV / (double)WIDTH);
 		checker_ray_angle(r);
@@ -119,9 +120,12 @@ void	draw_frame(t_cub *cub)
 		mlx_destroy_image(cub->mlx, cub->img);
 		exit(ft_error("mlx_get_data_addr failed"));
 	}
+
 	r.projection_distance = (WIDTH / 2.0) / tan(FOV / 2.0);
 	r.i = 0;
 	ft_loop_ray(&r, cub);
+	update_weapon(cub);
+	draw_weapon(cub);
 	mlx_put_image_to_window(cub->mlx, cub->window, cub->img, 0, 0);
 	mlx_destroy_image(cub->mlx, cub->img);
 }

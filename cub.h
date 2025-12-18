@@ -41,6 +41,7 @@
 
 #define KEY_ESC      65307 // Escapewwww
 
+
 typedef struct s_texture
 {
     void    *img;
@@ -51,6 +52,18 @@ typedef struct s_texture
     int     line_len;
     int     endian;
 }   t_texture;
+
+typedef struct s_ceil_floor
+{
+    t_texture   *texture;
+    int	y;
+    int color;
+    int x_ceil;
+    int y_ceil;
+    int step;
+    double tex_pos;
+    int height_ceil;
+}     t_ceil_floor;
 
 typedef struct s_wall_tex
 {
@@ -170,6 +183,14 @@ typedef struct s_ray
     t_player player;
 }   t_ray;
 
+typedef struct s_weapon
+{
+    t_texture frames[18];  // NOT void **, but an array of t_texture structs
+    int frame_count;
+    int current;
+    int animating;
+}   t_weapon;
+
 
 typedef struct s_cub
 {
@@ -177,6 +198,8 @@ typedef struct s_cub
     char *south_texture;
     char *east_texture;
     char *west_texture;
+    char *ceil_texture;
+    char *floor_texture;
     char *nopath;
     char *sopath;
     char *espath;
@@ -224,16 +247,20 @@ typedef struct s_cub
     t_texture   tex_south;
     t_texture   tex_east;
     t_texture   tex_west;
+    t_texture   tex_ceil;
+    t_texture   tex_floor;
+    t_weapon    weapon;
 
     /* Colors */
     int         floor_color;
-    int         ceiling_color;
 
     /* Keys */
     t_keys      keys;
     t_ray       ray;
     t_casting cast;
+    t_render r;
 }   t_cub;
+
 
 char    *creat_text(int fd, char *str);
 char    *get_current_line(char *line);
@@ -301,5 +328,8 @@ void	load_texture(t_cub *cub, t_texture *tex, char *path);
 t_texture *get_wall_texture(t_cub *cub, double ray_angle, int is_vertical);
 int get_texture_color(t_texture *tex, int tex_x, int tex_y);
 void	ft_loop_tex(t_wall_tex *wt, t_render *r, t_cub *cub);
-
+void	render(t_cub *cub);
+void	update_weapon(t_cub *cub);
+void	draw_weapon(t_cub *cub);
+void	load_weapon(t_cub *cub);
 #endif

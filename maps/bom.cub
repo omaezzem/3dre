@@ -1,7 +1,7 @@
-NO ./imgs/Lava_04_emissive-1K.xpm
-SO ./imgs/Lava_05_emissive-1K.xpm
-WE ./imgs/lava_10_emissive-1K.xpm
-EA ./imgs/lava_11_emissive-1K.xpm
+NO ./imgs/62_snow-bricks-texture-seamless.xpm
+SO ./imgs/62_snow-bricks-texture-seamless.xpm
+WE ./imgs/63_snow-bricks-texture-seamless.xpm
+EA ./imgs/63_snow-bricks-texture-seamless.xpm
 
 C 225,30,0
 F 220,100,0

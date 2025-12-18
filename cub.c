@@ -40,9 +40,10 @@ int main(int ac, char **av)
 		return (EXIT_FAILURE);
 	}
 	find_p(&cub);
+	cub.floor_texture = "imgs/11zon_snow-grass-leaves-ground-texture-poliigon.xpm";
+	cub.ceil_texture = "imgs/11zon_Sky_Clouds_Photo_Texture_A_P4171314.xpm";
+	cub.floor_color = 0xbdb7b7;
 	init_player_raycasting(&cub);
-	cub.floor_color = 0x573D32;
-	cub.ceiling_color = 0x000000;
 	mlx_initcub(&cub);
 	return (0);
 }

@@ -16,16 +16,26 @@ void	draw_ceiling_floor_column(t_cub *cub, int x,
 		int wall_top, int wall_bottom)
 {
 	int	y;
+	int color;
 
 	y = 0;
 	while (y < wall_top && y < HEIGHT)
 	{
-		my_mlx_pixel_put(cub, x, y, cub->ceiling_color);
+		if (cub->tex_ceil.img && cub->tex_ceil.addr)
+		{
+			color = get_texture_color(&cub->tex_ceil, 
+				x % cub->tex_ceil.width, 
+				y % cub->tex_ceil.height);
+			my_mlx_pixel_put(cub, x, y, color);
+		}
 		y++;
 	}
 	y = wall_bottom;
 	while (y < HEIGHT)
 	{
+		// color = get_texture_color(&cub->tex_floor,
+		// 	x % cub->tex_floor.width,
+		// 	y % cub->tex_floor.height);
 		my_mlx_pixel_put(cub, x, y, cub->floor_color);
 		y++;
 	}
