@@ -6,7 +6,7 @@
 /*   By: mel-badd <mel-badd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:30:32 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/06 18:07:42 by mel-badd         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:14:28 by mel-badd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	find_p(t_cub *cub)
 	if (!found)
 	{
 		ft_putstr_fd("Error: Player not found in map\n", 2);
-		exit(EXIT_FAILURE);
+		return ;
 	}
 }
 

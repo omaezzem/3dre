@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   failed_msg.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-badd <mel-badd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 14:26:21 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/12/06 17:05:44 by mel-badd         ###   ########.fr       */
+/*   Created: 2025/12/21 17:21:42 by mel-badd          #+#    #+#             */
+/*   Updated: 2025/12/21 17:21:47 by mel-badd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-void	failed_w()
+int	ft_isdigit(int c)
 {
-	ft_putstr_fd("Error\n🛑 Failed to create window\n", 2);
-	exit(1);
+	if (c >= '0' && c <= '9')
+	{
+		return (1);
+	}
+	return (0);
 }

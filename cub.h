@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:47:27 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/20 16:03:08 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/22 16:26:03 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <math.h>
-# include "minilibx-linux/mlx.h"
+# include <mlx.h>
 # include <stdbool.h>
 # include "get_next_line/get_next_line.h"
 
@@ -28,19 +28,18 @@
 # define FOV (M_PI / 3.0)   /* 60 degrees */
 # define T_SIZE 50
 # define MOVE_SPEED 10
-# define ROT_SPEED 0.07
-#define COLLISION_BUFFER 30.0
+# define ROT_SPEED 0.05
+#define COLLISION_BUFFER 15.0
 
-#define KEY_W        119  // 'w'
-#define KEY_A        97   // 'a'
-#define KEY_S        115  // 's'
-#define KEY_D        100  // 'd'
+#define KEY_W        13   // 'w'
+#define KEY_A        0    // 'a'
+#define KEY_S        1    // 's'
+#define KEY_D        2    // 'd'
 
-#define KEY_LEFT     65361 // Left Arrow
-#define KEY_RIGHT    65363 // Right Arrow
+#define KEY_LEFT     123  // Left Arrow
+#define KEY_RIGHT    124  // Right Arrow
 
-#define KEY_ESC      65307 // Escapewwww
-
+#define KEY_ESC      53   // Escape
 
 typedef struct s_texture
 {
@@ -238,7 +237,6 @@ typedef struct s_cub
     int         F;
     int         C;
 
-    /* Player */
     t_vector    player_pos;
     t_player    player;
 
@@ -263,31 +261,56 @@ typedef struct s_cub
 }   t_cub;
 
 
-char    *creat_text(int fd, char *str);
-char    *get_current_line(char *line);
-char    *next_list(char *text);
-char    *get_next_line(int fd);
-size_t	ft_strlen(char *s);
-char    *ft_substr(char *s, unsigned int start, size_t len);
-char    *ft_strdup(char *s1);
-char    *ft_strjoin(char *s1, char *s2);
-size_t  ft_strlen(char *s);
-char    **ft_split(char *s, char c);
-int     is_empty_line(char *line);
+
+
+/* Parsing functions */
+size_t ft_strlen(char *str);
+char	*ft_substr(char  *s, unsigned int start, size_t len);
 void    init_cub(t_cub *cub);
+void	pad_map(char **map);
 int     pars_av(int ac, char **av);
+void init_cub(t_cub *cub);
+int	ft_isdigit(int c);
 void    init_texture(char *path, t_cub *cub);
 int     check_path(char *path);
 int     is_path(char **split, t_cub *cub, char *line);
+int is_empty_line(char *line);
 void    join(t_cub *cub, char **path);
 int     read_map(char *av, t_cub *cub);
+int handle_colors_str(char *color);
+int number_of_char(t_cub *cub);
+int pars_av(int ac, char **av);
+void init_texture(char *path, t_cub *cub);
 int     handle_colors_F(t_cub *cub);
+int handle_colors_str(char *color);
 int     handle_colors_C(t_cub *cub);
+int ft_split_len(char **split);
+int read_map(char *av, t_cub *cub);
+void join(t_cub *cub, char **path);
+void	cleanup(t_cub *cub);
+int pars_map(t_cub *cub);
+int	handle_empty_line(t_cub *cub, char *line);
+int check_maps(char **map);
 int     number_of_char(t_cub *cub);
+int check_maps(char **map);
+int	check_ziro(t_cub *cub);
+int new_lines_map(t_cub *cub);
+void ft_free_split(char **split);
+void free_map_lines(t_cub *cub);
+void find_p(t_cub *cub);
+void change_space(t_cub *cub);
+void clean_newline(char *str);
+int	is_path(char **split, t_cub *cub, char *line);
 int     pars_map(t_cub *cub);
+int	handle_colors2(char **split, t_cub *cub);
 void    change_space(t_cub *cub);
 int     handle_map(t_cub *cub);
+int	can_start_map(t_cub *cub);
+int	handle_textures2(char **split, t_cub *cub);
+int check_path(char *path);
 void    find_p(t_cub *game);
+char	*ft_strjoin(char *s1, char *s2);
+char	**ft_split(char  *s, char c);
 int	ft_strcmp(char *s1, char *s2);
 void	ft_free_split(char **split);
 int	ft_atoi(const char *str);

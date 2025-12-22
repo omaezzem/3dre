@@ -6,7 +6,7 @@
 /*   By: mel-badd <mel-badd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:27:49 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/06 18:01:20 by mel-badd         ###   ########.fr       */
+/*   Updated: 2025/12/21 17:45:19 by mel-badd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,22 @@ static int	validate_rgb(char **split)
 {
 	int	i;
 	int	val;
+	int	j;
 
 	i = 0;
 	while (i < 3)
 	{
 		if (!split[i])
 			return (0);
+		j = 0;
+		while (split[i][j])
+		{
+			if (!ft_isdigit(split[i][j]))
+				return (0);
+			j++;
+		}
 		val = ft_atoi(split[i]);
-		if (val < 0 || val > 255)
+		if (val < 0 || val > 225)
 			return (0);
 		i++;
 	}
@@ -55,6 +63,11 @@ int	handle_colors_str(char *color)
 	if (!split)
 		return (0);
 	ret = validate_rgb(split);
+	if (!ret)
+	{
+		ft_free_split(split);
+		return (0);
+	}
 	ft_free_split(split);
 	return (ret);
 }

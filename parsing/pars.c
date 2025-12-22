@@ -6,7 +6,7 @@
 /*   By: mel-badd <mel-badd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 09:36:42 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/12/06 18:17:49 by mel-badd         ###   ########.fr       */
+/*   Updated: 2025/12/21 17:41:16 by mel-badd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,24 @@ void	pad_map(char **map_lines)
 	while (map_lines[i])
 	{
 		padded = pad_line(map_lines[i], max_len);
+		if (!padded)
+			return ;
 		free(map_lines[i]);
 		map_lines[i] = padded;
 		i++;
 	}
+}
+
+void	cleanup(t_cub *cub)
+{
+	if (cub->map)
+		free(cub->map);
+	if (cub->map_lines)
+		ft_free_split(cub->map_lines);
+	free(cub->north_texture);
+	free(cub->south_texture);
+	free(cub->west_texture);
+	free(cub->east_texture);
+	free(cub->_F);
+	free(cub->_C);
 }

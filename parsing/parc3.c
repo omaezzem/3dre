@@ -6,7 +6,7 @@
 /*   By: mel-badd <mel-badd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:23:46 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/06 17:48:25 by mel-badd         ###   ########.fr       */
+/*   Updated: 2025/12/21 17:09:24 by mel-badd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ int	handle_empty_line(t_cub *cub, char *line)
 {
 	if (is_empty_line(line))
 	{
-		if (cub->map == NULL)
-			return (1);
-		ft_putstr_fd("Error: empty line inside map\n", 2);
-		return (0);
+		if (cub->map != NULL)
+			return (0);
+		return (1);
 	}
 	return (2);
 }
@@ -59,7 +58,8 @@ int	can_start_map(t_cub *cub)
 
 int	is_path(char **split, t_cub *cub, char *line)
 {
-	int	status;
+	int		status;
+	char	*tmp;
 
 	status = handle_empty_line(cub, line);
 	if (status != 2)
@@ -74,6 +74,8 @@ int	is_path(char **split, t_cub *cub, char *line)
 		return (status);
 	if (!can_start_map(cub))
 		return (0);
-	cub->map = ft_strjoin(cub->map, line);
+	tmp = cub->map;
+	cub->map = ft_strjoin(tmp, line);
+	free(tmp);
 	return (1);
 }

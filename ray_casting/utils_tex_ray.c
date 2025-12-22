@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 15:15:56 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/12/19 14:56:27 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/22 16:32:22 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	draw_ceiling_floor_column(t_cub *cub, int x,
 	y = 0;
 	while (y < wall_top && y < HEIGHT)
 	{
-		my_mlx_pixel_put(cub, x, y, cub->ceil_color);
+		my_mlx_pixel_put(cub, x, y, cub->C);
 		y++;
 	}
 	y = wall_bottom;
 	while (y < HEIGHT)
 	{
-		my_mlx_pixel_put(cub, x, y, cub->floor_color);
+		my_mlx_pixel_put(cub, x, y, cub->F);
 		y++;
 	}
 }

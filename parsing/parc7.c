@@ -6,7 +6,7 @@
 /*   By: mel-badd <mel-badd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:29:31 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/06 18:05:47 by mel-badd         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:19:50 by mel-badd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ int	pars_map(t_cub *cub)
 	map_lines = ft_split(cub->map, '\n');
 	if (!map_lines)
 		return (0);
-	cub->map_lines = map_lines;
-	if (!check_border_line(map_lines[0]))
+	if (!check_border_line(map_lines[0])
+		|| !check_middle_lines(map_lines)
+		|| !check_border_line(map_lines[ft_split_len(map_lines) - 1])
+		|| !number_of_char(cub))
+	{
+		ft_free_split(map_lines);
 		return (0);
-	if (!check_middle_lines(map_lines))
-		return (0);
-	if (!check_border_line(map_lines[ft_split_len(map_lines) - 1]))
-		return (0);
-	if (!number_of_char(cub))
-		return (0);
+	}
+	ft_free_split(map_lines);
 	return (1);
 }
 

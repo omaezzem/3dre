@@ -6,7 +6,7 @@
 /*   By: mel-badd <mel-badd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:21:14 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/06 17:44:06 by mel-badd         ###   ########.fr       */
+/*   Updated: 2025/12/21 17:08:18 by mel-badd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ int	pars_av(int ac, char **av)
 
 void	init_texture(char *path, t_cub *cub)
 {
-	if (strcmp(path, "NO") == 0)
+	if (ft_strcmp(path, "NO") == 0)
 		cub->NO += 1;
-	else if (strcmp(path, "SO") == 0)
+	else if (ft_strcmp(path, "SO") == 0)
 		cub->SO += 1;
-	else if (strcmp(path, "WE") == 0)
+	else if (ft_strcmp(path, "WE") == 0)
 		cub->WE += 1;
-	else if (strcmp(path, "EA") == 0)
+	else if (ft_strcmp(path, "EA") == 0)
 		cub->EA += 1;
-	else if (strcmp(path, "F") == 0)
+	else if (ft_strcmp(path, "F") == 0)
 		cub->F += 1;
-	else if (strcmp(path, "C") == 0)
+	else if (ft_strcmp(path, "C") == 0)
 		cub->C += 1;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-badd <mel-badd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 23:36:03 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/09/13 12:23:47 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/21 17:05:37 by mel-badd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*creat_text(int fd, char *text)
 {
 	char	*buffer;
 	int		char_read;
+	char	*temp;
 
 	char_read = 1;
 	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
@@ -51,7 +52,9 @@ char	*creat_text(int fd, char *text)
 			return (NULL);
 		}
 		buffer[char_read] = '\0';
-		text = ft_strjoin(text, buffer);
+		temp = text;
+		text = ft_strjoin(temp, buffer);
+		free(temp);
 	}
 	free(buffer);
 	return (text);
