@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 15:13:11 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/12/10 16:14:50 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/20 14:30:40 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	update_weapon(t_cub *cub)
 	static int delay = 0;
 
 	delay++;
-	if (delay < 1)
+	if (delay < 2)
 		return;
 
 	delay = 0;
@@ -58,14 +58,15 @@ void	load_weapon(t_cub *cub)
 	int		i;
 	char	path[64];
 
-	cub->weapon.frame_count = 18;
+	cub->weapon.frame_count = 8;
 	cub->weapon.current = 0;
 	cub->weapon.animating = 0;
 	i = 0;
-	while (++i < cub->weapon.frame_count)
+	while (i < cub->weapon.frame_count)
 	{
-		sprintf(path, "imgs/%d.xpm", i);
+		sprintf(path, "imgs/m%d.xpm", i);
 		load_texture(cub, &cub->weapon.frames[i], path);
+		i++;
 	}
 }
 
@@ -77,10 +78,6 @@ void	load_textures(t_cub *cub)
 		ft_putstr_fd("Error\nMissing texture paths\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	if (cub->floor_texture)
-		load_texture(cub, &cub->tex_floor, cub->floor_texture);
-	if (cub->ceil_texture)
-		load_texture(cub, &cub->tex_ceil, cub->ceil_texture);
 	if (cub->north_texture)
 		load_texture(cub, &cub->tex_north, cub->north_texture);
 	if (cub->south_texture)

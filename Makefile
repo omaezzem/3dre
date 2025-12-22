@@ -6,7 +6,7 @@
 #    By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/27 09:42:39 by omaezzem          #+#    #+#              #
-#    Updated: 2025/12/10 15:30:43 by omaezzem         ###   ########.fr        #
+#    Updated: 2025/12/20 14:44:21 by omaezzem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ $(MLX_LIB):
 $(NAME): $(MLX_LIB) $(OBJS)
 	$(CC) $(OBJS) $(MLX_LIB) -lXext -lX11 -lm -lz -o $@
 
-%.o: %.c get_next_line/get_next_line.h cub.h1
+%.o: %.c get_next_line/get_next_line.h cub.h
 	$(CC) $(CFLAGS) -I$(MLX_DIR) -c $< -o $@
 
 clean:

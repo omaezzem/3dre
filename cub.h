@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:47:27 by mel-badd          #+#    #+#             */
-/*   Updated: 2025/12/10 16:25:28 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/12/20 16:03:08 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define FOV (M_PI / 3.0)   /* 60 degrees */
 # define T_SIZE 50
 # define MOVE_SPEED 10
-# define ROT_SPEED 0.05
-#define COLLISION_BUFFER 10.0
+# define ROT_SPEED 0.07
+#define COLLISION_BUFFER 30.0
 
 #define KEY_W        119  // 'w'
 #define KEY_A        97   // 'a'
@@ -185,7 +185,7 @@ typedef struct s_ray
 
 typedef struct s_weapon
 {
-    t_texture frames[18];  // NOT void **, but an array of t_texture structs
+    t_texture frames[8];  // NOT void **, but an array of t_texture structs
     int frame_count;
     int current;
     int animating;
@@ -253,6 +253,7 @@ typedef struct s_cub
 
     /* Colors */
     int         floor_color;
+    int         ceil_color;
 
     /* Keys */
     t_keys      keys;
