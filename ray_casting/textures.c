@@ -12,64 +12,6 @@
 
 #include "../cub.h"
 
-void	update_weapon(t_cub *cub)
-{
-	static int delay = 0;
-
-	delay++;
-	if (delay < 2)
-		return;
-
-	delay = 0;
-	cub->weapon.current++;
-	if (cub->weapon.current >= cub->weapon.frame_count)
-		cub->weapon.current = 0;
-}
-
-void	draw_weapon(t_cub *cub)
-{
-	t_texture	*tex;
-	int			x;
-	int			y;
-	int			start_x;
-	int			start_y;
-	int			color;
-
-	tex = &cub->weapon.frames[cub->weapon.current];
-	start_x = (WIDTH / 2) - (tex->width / 2);
-	start_y = HEIGHT - tex->height;
-	y = 0;
-	while (y < tex->height)
-	{
-		x = 0;
-		while (x < tex->width)
-		{
-			color = get_texture_color(tex, x, y);
-			if ((color & 0x00FFFFFF) != 0)
-				my_mlx_pixel_put(cub, start_x + x, start_y + y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	load_weapon(t_cub *cub)
-{
-	int		i;
-	char	path[64];
-
-	cub->weapon.frame_count = 8;
-	cub->weapon.current = 0;
-	cub->weapon.animating = 0;
-	i = 0;
-	while (i < cub->weapon.frame_count)
-	{
-		sprintf(path, "imgs/m%d.xpm", i);
-		load_texture(cub, &cub->weapon.frames[i], path);
-		i++;
-	}
-}
-
 void	load_textures(t_cub *cub)
 {	
 	if (!cub->north_texture || !cub->south_texture

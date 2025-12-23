@@ -124,8 +124,6 @@ void	draw_frame(t_cub *cub)
 	r.projection_distance = (WIDTH / 2.0) / tan(FOV / 2.0);
 	r.i = 0;
 	ft_loop_ray(&r, cub);
-	update_weapon(cub);
-	draw_weapon(cub);
 	mlx_put_image_to_window(cub->mlx, cub->window, cub->img, 0, 0);
 	mlx_destroy_image(cub->mlx, cub->img);
 }

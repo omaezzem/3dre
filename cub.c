@@ -90,7 +90,8 @@ static int	build_map_string(t_cub *cub)
 	return (1);
 }
 
-	void f(){system("leaks cub3D");}
+void f(){system("leaks cub3D");}
+
 int	main(int ac, char **av)
 {
 	t_cub	cub;

@@ -108,6 +108,7 @@ void rotate_right(t_cub *cub)
 {
     cub->player.angle = normalize_angle(cub->player.angle + ROT_SPEED);
 }
+
 int render_frame(t_cub *cub)
 {
     if (cub->keys.w)
@@ -230,7 +231,6 @@ void mlx_initcub(t_cub *cub)
     mlx_hook(cub->window, 2, 1L<<0, handling_keys, cub);
     mlx_hook(cub->window, 3, 1L<<1, key_release, cub);
     mlx_hook(cub->window, 17, 0, close_window, cub);
-    // mlx_hook(cub->window, 6, 1L<<6, mouse_move, cub);
     mlx_loop_hook(cub->mlx, render_frame, cub);
     mlx_loop(cub->mlx);
 }
